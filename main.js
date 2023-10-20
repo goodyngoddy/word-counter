@@ -2,11 +2,33 @@ let textarea = document.querySelector('textarea')
 let button = document.querySelector('button')
 let wordCount = document.querySelector('.word-count')
 let charCount = document.querySelector('.char-count')
+let errorMsg = document.querySelector('.error-msg')
+let errorTime = document.querySelector('.error-time')
 
 let alphaList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
+let currentTime = new Date().getTime()
+let endTime = new Date().getTime() + 5;
+let timeRange = endTime - currentTime
+
+
+
+textarea.addEventListener('input', () => {
+  errorMsg.style.display = 'none'
+})
 button.addEventListener('click', () => {
-  countWords()
+  if (textarea.value =='') {
+    let time = 4
+    let timer = setInterval(function() {
+      time--
+      errorMsg.textContent = `Please Enter Text (${time})`
+      if (time < 0) {
+        errorMsg.textContent = ''
+      }
+    }, 1000)
+  } else {
+    countWords()
+  }
 })
 
 let wordCountNum
